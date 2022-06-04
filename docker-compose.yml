@@ -24,21 +24,20 @@ services:
   message_service:
     build: .
     environment:
-      DB_USERNAME: postgres
-      DB_PASSWORD: postgres
-      DB_HOST: message_service_db
-      DB_PORT: 5432
-      DB_NAME: postgres
       KAFKA_HOST: kafka
       KAFKA_PORT: 9092
+      KAFKA_NOTIFICATIONS_TOPIC: notifications
+      KAFKA_EVENTS_TOPIC: events
+      JWT_SECRET: jwt_secret
+      JWT_ALGORITHM: HS256
     networks:
       - dislinkt
     ports:
-      - 8004:8004
+      - 8012:8012
 
   message_service_db:
     image: postgres
-    environment:
+    environment: 
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
     volumes:
@@ -47,7 +46,7 @@ services:
     networks:
       - dislinkt
     ports:
-      - 5437:5432
+      - 5438:5432
 
 networks:
   dislinkt:
