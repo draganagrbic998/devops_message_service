@@ -16,6 +16,11 @@ import time
 import json
 
 
+DB_USERNAME = os.getenv('DB_USERNAME', 'postgres')
+DB_PASSWORD = os.getenv('DB_PASSWORD', 'postgres')
+DB_HOST = os.getenv('DB_HOST', 'message_service_db')
+DB_PORT = os.getenv('DB_PORT', '5432')
+DB_NAME = os.getenv('DB_NAME', 'postgres')
 KAFKA_HOST = os.getenv('KAFKA_HOST', 'kafka')
 KAFKA_PORT = os.getenv('KAFKA_PORT', '9092')
 KAFKA_EVENTS_TOPIC = os.getenv('KAFKA_EVENTS_TOPIC', 'events')
@@ -24,7 +29,7 @@ JWT_SECRET = os.getenv('JWT_SECRET', 'jwt_secret')
 JWT_ALGORITHM = os.getenv('JWT_ALGORITHM', 'HS256')
 
 
-db = create_engine('postgresql://postgres:postgres@message_service_db:5432/postgres')
+db = create_engine(f'postgresql://{DB_USERNAME}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}')
 sio = socketio.AsyncServer(cors_allowed_origins='http://localhost:8000', async_mode='asgi')
 app = FastAPI(title='Message Service API')
 kafka_producer = None
